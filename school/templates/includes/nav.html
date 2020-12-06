@@ -1,0 +1,66 @@
+{% load static %}
+<div class="container">
+    <header class="blog-header py-3">
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-4 pt-1">
+          <a class="text-muted" href="#">Main site</a>
+        </div>
+        <div class="col-4 text-center">
+          <a class="blog-header-logo text-dark" href="{% url 'index' %}">
+          <img class='img-fluid' src="{% static 'img/logo_black.png' %}" alt="" width="100" height="60">
+          </a>
+        </div>
+        <div class="col-4 d-flex justify-content-end align-items-center">
+          <a class="text-muted" href="#" aria-label="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+          </a>
+          {% if user.is_authenticated %}
+          <a class="btn btn-sm btn-outline-info" href=''>Logout</a>
+          {% else %}
+          <a class="btn btn-sm btn-outline-info" href=''>Teacher?</a>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <button class="navbar-toggler w-100" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav w-100 justify-content-between">
+      <li class="nav-item">
+        <a class="nav-link" href=''>Main</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href=''>News</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href=''>For Students</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href=''>For Parents</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href=''>Ask Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href=''>Any Wishes?</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Advanced Options
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href=''>Profile</a>
+          <a class="dropdown-item" href=''>New Post</a>
+          <a class="dropdown-item" href=''>New Category</a>
+          <a class="dropdown-item" href=''>Change Password</a>
+        </div>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
