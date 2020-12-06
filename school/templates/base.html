@@ -1,19 +1,44 @@
-{% load static %}
-
+<!doctype html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'style.css' %}">
-        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-        <!-- development version, includes helpful console warnings -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-        <title>{% block title %}Shcool Shamir{% endblock %}</title>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+        <title>{% block title %}The Last Social Media You'll Ever Need{% endblock %} | Leva</title>
+        <!-- Загрузка статики -->
+        {% load static %}
+        <link rel='stylesheet' href='{% static 'bootstrap/dist/css/bootstrap.min.css' %}'>
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}" >
+        <script src='{% static 'jquery/dist/jquery.min.js' %}'></script>
+        <script src='{% static 'bootstrap/dist/js/bootstrap.min.js' %}'></script>
     </head>
-    <body class="bg-light">
-        {% include 'includes/nav.html' %}
-        {% block content %}{% endblock %}
+    <body>
+        <main>
+            <div class='container'>
+                {% include 'includes/nav.html' %}
+                {% block text %}{% endblock %}
+                {% block content %}
+                <!-- Содержимое страницы -->
+                {% endblock content %}
+            </div>
+        </main>
+        {% include 'includes/footer.html' %}
     </body>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>  
+        var postList = document.querySelectorAll(".post-text")
+        function pClasses() {
+            for (post of postList) {
+                var pList = post.querySelectorAll("p")
+                var imgList = post.querySelectorAll("img")
+                // console.log(pList, imgList) 
+                for (p of pList) {
+                    p.classList.add("h1")
+                }
+                for (img of imgList) {
+                    img.classList.add("img-thumbnail")
+                }
+            }
+        }
+        pClasses()
+    </script>
 </html>

@@ -1,0 +1,19 @@
+{% load static %}
+{% load user_filters %}
+
+<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
+  <div class="col p-4 d-flex flex-column position-static">
+    <strong class="d-inline-block mb-2 text-primary">For Students</strong>
+    <h3 class="mb-0">{{ post_e.title }}</h3>
+    <div class="mb-1 text-muted">{{ post_e.pub_date|date:'d M' }}</div>
+    <p class="card-text mb-auto">{{ post_e.author.get_full_name }}</p>
+  </div>
+</div>
+<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
+  <div class="col p-4 d-flex flex-column position-static">
+    <strong class="d-inline-block mb-2 text-success">For Parents</strong>
+    <h3 class="mb-0">{{ post_e.title }}</h3>
+    <div class="mb-1 text-muted">{{ post_e.pub_date|date:'d M' }}</div>
+    <p class="card-text mb-auto">{{ post_e.author.get_full_name }}</p>
+  </div>
+</div>
