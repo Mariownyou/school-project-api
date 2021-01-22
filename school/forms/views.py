@@ -6,6 +6,15 @@ from .forms import ContactTeacherForm, FeedbackForm
 from .models import ContactTeacher, Feedback, Teacher
 
 # Create your views here.
+def index(request):
+    teachers = Teacher.objects.all()
+
+    context = {
+        'teachers': teachers
+    }
+    return render(request, 'index.html', context)
+
+
 def send_feedback(request):
     form = FeedbackForm(request.POST or None)
     feedbacks = Feedback.objects.filter(is_approved=True)

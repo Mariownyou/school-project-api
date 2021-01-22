@@ -2,15 +2,16 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import CommentForm, PostForm, CategoryForm
-from .models import Follow, Group, Post, User, Category
+from .forms import PostForm, CategoryForm
+from .models import Group, Post, User, Category
 
 
 def index(request):
     post_list = Post.objects.select_related('author')
-    latest_exam = Post.objects.filter(category__slug="exam").first()
-    latest_reading = Post.objects.filter(category__slug="homework").first()
+    latest_exam = Post.objects.filter(category__group__slug="parents").first()
+    latest_reading = Post.objects.filter(category__group__slug="students").first()
     paginator = Paginator(post_list, 10)
+    print(latest_reading.title)
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -165,58 +166,3 @@ def page_not_found(request, exception):
 
 def server_error(request):
     return render(request, "misc/500.html", status=500)
-
-
-@login_required
-def add_comment(request, username, post_id):
-    post = get_object_or_404(Post, author__username=username, pk=post_id)
-    form = CommentForm(request.POST or None, files=request.FILES or None)
-    items = post.comments.all()
-
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.author = request.user
-        comment.post = post
-        comment.save()
-        return redirect('post', username=username, post_id=post_id, permanent=True)
-
-    context = {
-        'form': form,
-        'post': post,
-        'items': items
-    }
-    return render(request, 'post.html', context)
-
-
-@login_required
-def profile_follow(request, username):
-    follower = get_object_or_404(User, username=request.user)
-    author = get_object_or_404(User, username=username)
-    if author != follower:
-        Follow.objects.get_or_create(user=follower, author=author)
-    return redirect('follow_index')
-
-
-@login_required
-def follow_index(request):
-    post_list = Post.objects.filter(author__following__user=request.user)
-    paginator = Paginator(post_list, 10)
-
-    page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
-
-    context = {
-        'page': page,
-        'paginator': paginator
-    }
-    return render(request, 'follow.html', context)
-
-
-@login_required
-def profile_unfollow(request, username):
-    follower = get_object_or_404(User, username=request.user)
-    author = get_object_or_404(User, username=username)
-    if author != follower:
-        follow = Follow.objects.get(user=follower, author=author)
-        follow.delete()
-    return redirect('follow_index')

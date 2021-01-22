@@ -88,28 +88,3 @@ class Post(models.Model):
         text_to_print = f'{author}\n{pub_date:%Y-%m-%d %H:%M}\n{text}'
         return text_to_print
 
-
-class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
-    text = models.TextField('Ваш комментарий', help_text='Напишите ваш коммент ❤')
-    created = models.DateTimeField('date published', auto_now_add=True)
-
-    class Meta:
-        ordering = ['-created']
-
-    def __str__(self):
-        post = self.post
-        author = self.author
-        text = self.text[50:]
-        date = self.created
-        text_to_print = f'{post}\n{author}\n{text}\n{date:%Y-%m-%d %H:%M}'
-        return text_to_print
-
-
-class Follow(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower', null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following', null=True)
-
-    class Meta:
-        unique_together = ['user', 'author']

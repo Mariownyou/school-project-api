@@ -2,6 +2,12 @@ from django.db import models
 
 
 class Teacher(models.Model):
+    photo = models.ImageField(
+        upload_to='forms/teachers',
+        blank=True, null=True,
+        verbose_name='Фото',
+        help_text='Ваше красивое фото'
+    )
     name = models.CharField('Name', max_length=200)
     email = models.EmailField('Email')
 

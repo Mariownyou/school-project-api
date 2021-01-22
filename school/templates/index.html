@@ -6,28 +6,17 @@
 {% block content %}
     <main role="main" class="container">
       <div class="row">
-        <div class="col-lg-3">
-          {% include "includes/latest_posts.html" with post_e=latest_e  post_r=latest_r%}
+        <div class="col-lg-8">
+          {% include "includes/about_school.html" with post_e=latest_e  post_r=latest_r%}
         </div>
-        <div class="col-lg-6 blog-main">
-          {% include "includes/carousel.html" %}
+        <div class="col-lg-4 blog-main">
           <h3 class="pb-4 mb-4 font-italic border-bottom">
-            Latests posts
+            Our Teachers
           </h3>
-          {% load cache %} 
-          {% cache 20 index_page %}  
-            {% for post in page %}
-
-            {% include 'includes/posts.html' with post=post %}
-
+            {% for teacher in teachers %}
+              {{ teacher.name }}
             {% endfor %}
-          {% endcache %}
-
-          {% if page.has_other_pages %}
-            {% include "includes/paginator.html" with items=page paginator=paginator %}
-          {% endif %}
         </div>
-        {% include "includes/aside.html" %}
       </div>
       
     </main>
